@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Neatly Health — A quick favor</title>
+
+<!--
+======================================================================
+  NEATLY HEALTH USAGE SURVEY  ·  posts directly into HubSpot
+======================================================================
+  Portal ID and Form GUID are filled in below. Field names and dropdown
+  values are matched to Neatly's HubSpot exactly.
+
+  TO DO before sharing:
+  - Replace APP_STORE_URL and PLAY_STORE_URL (two spots, in question 6).
+  - Host the file (drag onto https://app.netlify.com/drop).
+  - Send the link with the contact's email appended so responses attach
+    to their record:  https://your-url.netlify.app/?email={{contact.email}}
+======================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --gold: #EAC343;
+    --orange: #EA8643;
+    --periwinkle: #A0AEF4;
+    --slate: #7F87B3;
+    --ink: #1E1F1F;
+    --white: #FFFFFF;
+    --gray: #F5F5F5;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--gray);
+    color: var(--ink);
+    font-family: "Nunito Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; }
+  .accent-bar { height: 8px; width: 100%; background: var(--slate); border-radius: 4px; margin-bottom: 28px; }
+  .card { background: var(--white); border-radius: 18px; padding: 44px 38px 40px; box-shadow: 0 18px 50px rgba(30,31,31,0.10); }
+  .eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; color: var(--orange); margin: 0 0 14px; }
+  .logo { display: block; width: auto; height: 38px; margin: 0 0 22px; }
+  h1 { font-weight: 800; line-height: 1.12; font-size: 31px; letter-spacing: -0.015em; margin: 0 0 16px; color: var(--ink); }
+  .lede { font-size: 16px; line-height: 1.55; color: #44464a; margin: 0 0 12px; }
+  fieldset { border: none; margin: 44px 0 0; padding: 0; }
+  legend { font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 0.04em; color: var(--ink); line-height: 1.4; padding: 0; margin-bottom: 6px; }
+  .q-help { font-size: 14px; color: var(--slate); margin: 0 0 16px; }
+  .review-links { display: block; margin-top: 6px; }
+  .review-links a { color: var(--orange); font-weight: 700; text-decoration: none; }
+  .review-links a:hover { text-decoration: underline; }
+  .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1.5px solid #e4e4e8; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s ease, background .15s ease; background: var(--white); }
+  .option:hover { border-color: var(--periwinkle); }
+  .option input { margin-top: 3px; accent-color: var(--gold); width: 18px; height: 18px; flex: 0 0 auto; }
+  .option span { font-size: 15px; line-height: 1.4; }
+  .option.is-checked { border-color: var(--gold); background: rgba(234,195,67,0.16); }
+  input[type="text"], textarea { width: 100%; font-family: "Nunito Sans", sans-serif; font-size: 15px; color: var(--ink); padding: 13px 15px; border: 1.5px solid #e4e4e8; border-radius: 12px; background: var(--white); }
+  input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(234,195,67,0.30); }
+  textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+  .other-text { margin-top: 10px; display: none; }
+  .other-text.show { display: block; }
+  .submit { margin-top: 34px; width: 100%; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); background: var(--gold); border: none; border-radius: 999px; padding: 17px 24px; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
+  .submit:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(30,31,31,0.14); }
+  .submit:disabled { opacity: .55; cursor: default; transform: none; box-shadow: none; }
+  .footnote { text-align: center; font-size: 12.5px; color: var(--slate); margin-top: 22px; line-height: 1.5; }
+  .status { font-size: 14px; margin-top: 16px; text-align: center; color: var(--orange); min-height: 18px; }
+  .done { display: none; text-align: center; padding: 20px 0 6px; }
+  .done.show { display: block; }
+  .done h1 { font-size: 27px; }
+  .done p { font-size: 16px; line-height: 1.55; color: #44464a; }
+  @media (max-width: 520px) { .card { padding: 32px 22px 30px; } h1 { font-size: 26px; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="accent-bar"></div>
+
+    <div class="card">
+      <div id="formState">
+        <img class="logo" src="https://243472073.fs1.hubspotusercontent-na2.net/hubfs/243472073/Neatly%20Health%20-%20Full%20Logo.png" alt="Neatly Health" />
+        <h1>A few questions about your Neatly experience</h1>
+        <p class="lede">You use Neatly, and we want to understand how it actually fits into your life so we can make the parts you love even better. Your honest answers shape what we build next.</p>
+
+        <form id="survey" novalidate>
+          <!-- Q1 -->
+          <fieldset>
+            <legend>1. What do you most often use Neatly for?</legend>
+            <p class="q-help">Pick the one that fits best.</p>
+            <label class="option"><input type="radio" name="q1" value="recording_and_summarizing_doctor_appointments" /><span>Recording and summarizing doctor appointments</span></label>
+            <label class="option"><input type="radio" name="q1" value="understanding_a_diagnosis_or_medical_terminology_after_a_visit" /><span>Understanding a diagnosis or medical terminology after a visit</span></label>
+            <label class="option"><input type="radio" name="q1" value="preparing_questions_before_an_appointment" /><span>Preparing questions before an appointment</span></label>
+            <label class="option"><input type="radio" name="q1" value="tracking_a_chronic_condition_over_time" /><span>Tracking a chronic condition over time (e.g., fertility, pain, eczema)</span></label>
+            <label class="option"><input type="radio" name="q1" value="helping_a_family_member_with_their_care" /><span>Helping a family member with their care (parent, child, partner)</span></label>
+            <label class="option"><input type="radio" name="q1" value="keeping_a_personal_health_record_across_providers" /><span>Keeping a personal health record across providers</span></label>
+            <label class="option"><input type="radio" name="q1" value="other" id="q1other" /><span>Other</span></label>
+            <input type="text" class="other-text" id="q1otherText" placeholder="Tell us more…" />
+          </fieldset>
+
+          <!-- Q2 -->
+          <fieldset>
+            <legend>2. Think about the best experience you've had using Neatly. What happened?</legend>
+            <p class="q-help">Pick the moment that resonates most.</p>
+            <label class="option"><input type="radio" name="q2" value="i_finally_understood_something_my_doctor_said_that_i_d_been_confused_about" /><span>I finally understood something my doctor said that I'd been confused about</span></label>
+            <label class="option"><input type="radio" name="q2" value="i_caught_something_important_in_the_summary_i_would_have_forgotten" /><span>I caught something important in the summary I would have forgotten</span></label>
+            <label class="option"><input type="radio" name="q2" value="i_felt_more_prepared_and_confident_going_into_my_next_appointment" /><span>I felt more prepared and confident going into my next appointment</span></label>
+            <label class="option"><input type="radio" name="q2" value="i_shared_the_summary_with_a_family_member_or_caregiver_and_it_helped" /><span>I shared the summary with a family member or caregiver and it helped</span></label>
+            <label class="option"><input type="radio" name="q2" value="i_noticed_a_pattern_across_visits_i_wouldnt_have_seen_otherwise" /><span>I noticed a pattern across visits I wouldn't have seen otherwise</span></label>
+            <label class="option"><input type="radio" name="q2" value="i_used_it_to_push_back_on_or_get_clarity_from_my_doctor" /><span>I used it to push back on or get clarity from my doctor</span></label>
+            <label class="option"><input type="radio" name="q2" value="other" id="q2other" /><span>Other</span></label>
+            <input type="text" class="other-text" id="q2otherText" placeholder="Tell us more…" />
+          </fieldset>
+
+          <!-- Q3 -->
+          <fieldset>
+            <legend>3. How often do you use Neatly?</legend>
+            <p class="q-help">Pick the one that's closest.</p>
+            <label class="option"><input type="radio" name="q3" value="every_doctor_visit_i_have" /><span>Every doctor visit I have</span></label>
+            <label class="option"><input type="radio" name="q3" value="most_doctor_visits" /><span>Most doctor visits</span></label>
+            <label class="option"><input type="radio" name="q3" value="occasionally_only_for_important_or_complex_visits" /><span>Occasionally, only for important or complex visits</span></label>
+            <label class="option"><input type="radio" name="q3" value="rarely_i_forget_or_dont_think_to_open_it" /><span>Rarely, I forget or don't think to open it</span></label>
+            <label class="option"><input type="radio" name="q3" value="ive_only_used_it_once_or_twice" /><span>I've only used it once or twice</span></label>
+            <label class="option"><input type="radio" name="q3" value="i_use_it_between_visits_too" /><span>I use it between visits too (reviewing past summaries, prepping questions)</span></label>
+          </fieldset>
+
+          <!-- Q4 -->
+          <fieldset>
+            <legend>4. What's one thing we could do better, or something you'd love to see Neatly add?</legend>
+            <p class="q-help">Optional, but we read every answer.</p>
+            <textarea id="q4" placeholder="Your answer…"></textarea>
+          </fieldset>
+
+          <!-- Q5 -->
+          <fieldset>
+            <legend>5. Would you be open to a quick Zoom with our founders?</legend>
+            <p class="q-help">Fifteen minutes, just to hear your experience in your own words.</p>
+            <label class="option"><input type="radio" name="q5" value="yes" /><span>Yes, I'd be glad to</span></label>
+            <label class="option"><input type="radio" name="q5" value="maybe" /><span>Maybe, tell me more</span></label>
+            <label class="option"><input type="radio" name="q5" value="no" /><span>Not right now</span></label>
+          </fieldset>
+
+          <!-- Q6 -->
+          <fieldset>
+            <legend>6. Would you be willing to leave a quick review?</legend>
+            <p class="q-help">It only takes a minute and helps others find Neatly.
+              <span class="review-links"><a href="APP_STORE_URL" target="_blank" rel="noopener">App Store</a> &nbsp;·&nbsp; <a href="PLAY_STORE_URL" target="_blank" rel="noopener">Google Play</a></span>
+            </p>
+            <label class="option"><input type="radio" name="q6" value="yes_ill_leave_one" /><span>Yes, I'll leave one</span></label>
+            <label class="option"><input type="radio" name="q6" value="maybe_later" /><span>Maybe later</span></label>
+            <label class="option"><input type="radio" name="q6" value="not_this_time" /><span>Not this time</span></label>
+          </fieldset>
+
+          <button type="submit" class="submit" id="submitBtn">Send my answers</button>
+          <div class="status" id="status"></div>
+        </form>
+
+        <p class="footnote">Your responses help us build a better health companion. We never share individual answers.</p>
+      </div>
+
+      <div class="done" id="doneState">
+        <img class="logo" src="https://243472073.fs1.hubspotusercontent-na2.net/hubfs/243472073/Neatly%20Health%20-%20Full%20Logo.png" alt="Neatly Health" style="margin-left:auto;margin-right:auto;" />
+        <h1>Thank you. Truly.</h1>
+        <p>That's exactly the kind of insight that shapes what we build next. We appreciate you taking the time.</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ====== HUBSPOT IDS ======
+  const PORTAL_ID = "243472073";                              // Neatly's HubSpot account
+  const FORM_GUID = "4bea0d08-5dbf-4745-adda-6ced6de371ed";   // Neatly Usage Survey form
+  // =========================
+
+  const params = new URLSearchParams(window.location.search);
+  const prefilledEmail = params.get("email") || "";
+
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    return match ? match[2] : "";
+  }
+
+  function wireOther(radioId, textId) {
+    const radio = document.getElementById(radioId);
+    const text = document.getElementById(textId);
+    document.querySelectorAll('input[name="' + radio.name + '"]').forEach(r => {
+      r.addEventListener("change", () => text.classList.toggle("show", radio.checked));
+    });
+  }
+  wireOther("q1other", "q1otherText");
+  wireOther("q2other", "q2otherText");
+
+  document.querySelectorAll(".option input").forEach(input => {
+    input.addEventListener("change", () => {
+      document.querySelectorAll('input[name="' + input.name + '"]').forEach(sib => {
+        sib.closest(".option").classList.toggle("is-checked", sib.checked);
+      });
+    });
+  });
+
+  const form = document.getElementById("survey");
+  const statusEl = document.getElementById("status");
+  const submitBtn = document.getElementById("submitBtn");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    statusEl.textContent = "";
+
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    const q3 = document.querySelector('input[name="q3"]:checked');
+
+    if (!q1 || !q2 || !q3) {
+      statusEl.textContent = "Please answer the first three questions.";
+      return;
+    }
+
+    const fields = [
+      { name: "primary_use", value: q1.value },
+      { name: "best_experience", value: q2.value },
+      { name: "usage_frequency", value: q3.value }
+    ];
+    if (q1.value === "other") fields.push({ name: "primary_use_other", value: document.getElementById("q1otherText").value.trim() });
+    if (q2.value === "other") fields.push({ name: "best_experience_other", value: document.getElementById("q2otherText").value.trim() });
+
+    const q4 = document.getElementById("q4").value.trim();
+    const q5 = document.querySelector('input[name="q5"]:checked');
+    const q6 = document.querySelector('input[name="q6"]:checked');
+    if (q4) fields.push({ name: "improvement_feedback", value: q4 });
+    if (q5) fields.push({ name: "founder_call_interest", value: q5.value });
+    if (q6) fields.push({ name: "review_interest", value: q6.value });
+
+    if (prefilledEmail) fields.push({ name: "email", value: prefilledEmail });
+
+    const payload = {
+      fields,
+      context: { hutk: getCookie("hubspotutk"), pageUri: window.location.href, pageName: "Neatly usage survey" }
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    try {
+      const res = await fetch(
+        "https://api.hsforms.com/submissions/v3/integration/submit/" + PORTAL_ID + "/" + FORM_GUID,
+        { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }
+      );
+      if (!res.ok) throw new Error("HubSpot returned " + res.status);
+      document.getElementById("formState").style.display = "none";
+      document.getElementById("doneState").classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send my answers";
+      statusEl.textContent = "Something went wrong sending that. Please try again in a moment.";
+      console.error(err);
+    }
+  });
+</script>
+</body>
+</html>
