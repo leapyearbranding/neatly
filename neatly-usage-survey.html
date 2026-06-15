@@ -55,17 +55,17 @@
   .review-links { display: block; margin-top: 6px; }
   .review-links a { color: var(--orange); font-weight: 700; text-decoration: none; }
   .review-links a:hover { text-decoration: underline; }
-  .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1.5px solid #e4e4e8; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s ease, background .15s ease; background: var(--white); }
+  .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1.5px solid #e4e4e8; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s; }
   .option:hover { border-color: var(--periwinkle); }
   .option input { margin-top: 3px; accent-color: var(--gold); width: 18px; height: 18px; flex: 0 0 auto; }
   .option span { font-size: 15px; line-height: 1.4; }
   .option.is-checked { border-color: var(--gold); background: rgba(234,195,67,0.16); }
-  input[type="text"], textarea { width: 100%; font-family: "Nunito Sans", sans-serif; font-size: 15px; color: var(--ink); padding: 13px 15px; border: 1.5px solid #e4e4e8; border-radius: 12px; background: var(--white); }
+  input[type="text"], textarea { width: 100%; font-family: "Nunito Sans", sans-serif; font-size: 15px; color: var(--ink); padding: 13px 15px; border: 1.5px solid #e4e4e8; border-radius: 12px; background: var(--white); transition: border-color .15s; }
   input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(234,195,67,0.30); }
   textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
   .other-text { margin-top: 10px; display: none; }
   .other-text.show { display: block; }
-  .submit { margin-top: 34px; width: 100%; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); background: var(--gold); border: none; border-radius: 999px; padding: 17px 24px; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
+  .submit { margin-top: 34px; width: 100%; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); background: var(--gold); border: none; border-radius: 12px; padding: 15px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
   .submit:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(30,31,31,0.14); }
   .submit:disabled { opacity: .55; cursor: default; transform: none; box-shadow: none; }
   .footnote { text-align: center; font-size: 12.5px; color: var(--slate); margin-top: 22px; line-height: 1.5; }
@@ -150,7 +150,7 @@
           <fieldset>
             <legend>6. Would you be willing to leave a quick review?</legend>
             <p class="q-help">It only takes a minute and helps others find Neatly.
-              <span class="review-links"><a href="APP_STORE_URL" target="_blank" rel="noopener">App Store</a> &nbsp;·&nbsp; <a href="PLAY_STORE_URL" target="_blank" rel="noopener">Google Play</a></span>
+              <span class="review-links"><a href="https://apps.apple.com/us/app/neatly-health/id6753769011" target="_blank" rel="noopener">App Store</a> &nbsp;·&nbsp; <a href="https://play.google.com/store/apps/details?id=app.neatlyhealth.neatly&hl=en_US" target="_blank" rel="noopener">Google Play</a></span>
             </p>
             <label class="option"><input type="radio" name="q6" value="yes_ill_leave_one" /><span>Yes, I'll leave one</span></label>
             <label class="option"><input type="radio" name="q6" value="maybe_later" /><span>Maybe later</span></label>
