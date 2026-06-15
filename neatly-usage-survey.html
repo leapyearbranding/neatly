@@ -14,9 +14,11 @@
 
   TO DO before sharing:
   - Replace APP_STORE_URL and PLAY_STORE_URL (two spots, in question 6).
-  - Host the file (drag onto https://app.netlify.com/drop).
-  - Send the link with the contact's email appended so responses attach
-    to their record:  https://your-url.netlify.app/?email={{contact.email}}
+  - In HubSpot, make sure the form includes First name, Last name, and
+    Email fields (all optional), plus all the survey properties.
+  - Host the file, then send the link from HubSpot with these tokens so
+    the fields prefill and the response attaches to the contact:
+      ?firstname={{contact.firstname}}&lastname={{contact.lastname}}&email={{contact.email}}
 ======================================================================
 -->
 
@@ -55,17 +57,21 @@
   .review-links { display: block; margin-top: 6px; }
   .review-links a { color: var(--orange); font-weight: 700; text-decoration: none; }
   .review-links a:hover { text-decoration: underline; }
-  .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1.5px solid #e4e4e8; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s; }
+  .option { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border: 1.5px solid #e4e4e8; border-radius: 12px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s ease, background .15s ease; background: var(--white); }
   .option:hover { border-color: var(--periwinkle); }
   .option input { margin-top: 3px; accent-color: var(--gold); width: 18px; height: 18px; flex: 0 0 auto; }
   .option span { font-size: 15px; line-height: 1.4; }
   .option.is-checked { border-color: var(--gold); background: rgba(234,195,67,0.16); }
-  input[type="text"], textarea { width: 100%; font-family: "Nunito Sans", sans-serif; font-size: 15px; color: var(--ink); padding: 13px 15px; border: 1.5px solid #e4e4e8; border-radius: 12px; background: var(--white); transition: border-color .15s; }
+  input[type="text"], textarea { width: 100%; font-family: "Nunito Sans", sans-serif; font-size: 15px; color: var(--ink); padding: 13px 15px; border: 1.5px solid #e4e4e8; border-radius: 12px; background: var(--white); }
   input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(234,195,67,0.30); }
   textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
   .other-text { margin-top: 10px; display: none; }
   .other-text.show { display: block; }
-  .submit { margin-top: 34px; width: 100%; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); background: var(--gold); border: none; border-radius: 12px; padding: 15px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+  #detailsFieldset { margin-top: 26px; }
+  .name-row { display: flex; gap: 10px; }
+  .name-row input { flex: 1; }
+  @media (max-width: 420px) { .name-row { flex-direction: column; gap: 8px; } }
+  .submit { margin-top: 34px; width: 100%; font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); background: var(--gold); border: none; border-radius: 999px; padding: 17px 24px; cursor: pointer; transition: transform .12s ease, box-shadow .12s ease; }
   .submit:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(30,31,31,0.14); }
   .submit:disabled { opacity: .55; cursor: default; transform: none; box-shadow: none; }
   .footnote { text-align: center; font-size: 12.5px; color: var(--slate); margin-top: 22px; line-height: 1.5; }
@@ -90,6 +96,16 @@
         <p class="lede">You use Neatly, and we want to understand how it actually fits into your life so we can make the parts you love even better. Your honest answers shape what we build next.</p>
 
         <form id="survey" novalidate>
+          <!-- Your details (optional, auto-filled from the email link) -->
+          <fieldset id="detailsFieldset">
+            <legend>Your details (optional)</legend>
+            <div class="name-row">
+              <input type="text" id="firstName" placeholder="First name" autocomplete="given-name" />
+              <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name" />
+            </div>
+            <input type="text" id="emailField" placeholder="Email" autocomplete="email" style="margin-top:8px;" />
+          </fieldset>
+
           <!-- Q1 -->
           <fieldset>
             <legend>1. What do you most often use Neatly for?</legend>
@@ -150,7 +166,7 @@
           <fieldset>
             <legend>6. Would you be willing to leave a quick review?</legend>
             <p class="q-help">It only takes a minute and helps others find Neatly.
-              <span class="review-links"><a href="https://apps.apple.com/us/app/neatly-health/id6753769011" target="_blank" rel="noopener">App Store</a> &nbsp;·&nbsp; <a href="https://play.google.com/store/apps/details?id=app.neatlyhealth.neatly&hl=en_US" target="_blank" rel="noopener">Google Play</a></span>
+              <span class="review-links"><a href="APP_STORE_URL" target="_blank" rel="noopener">App Store</a> &nbsp;·&nbsp; <a href="PLAY_STORE_URL" target="_blank" rel="noopener">Google Play</a></span>
             </p>
             <label class="option"><input type="radio" name="q6" value="yes_ill_leave_one" /><span>Yes, I'll leave one</span></label>
             <label class="option"><input type="radio" name="q6" value="maybe_later" /><span>Maybe later</span></label>
@@ -179,7 +195,11 @@
   // =========================
 
   const params = new URLSearchParams(window.location.search);
-  const prefilledEmail = params.get("email") || "";
+
+  // Prefill the optional details from the email link (?firstname=&lastname=&email=)
+  document.getElementById("firstName").value = params.get("firstname") || "";
+  document.getElementById("lastName").value = params.get("lastname") || "";
+  document.getElementById("emailField").value = params.get("email") || "";
 
   function getCookie(name) {
     const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
@@ -236,7 +256,13 @@
     if (q5) fields.push({ name: "founder_call_interest", value: q5.value });
     if (q6) fields.push({ name: "review_interest", value: q6.value });
 
-    if (prefilledEmail) fields.push({ name: "email", value: prefilledEmail });
+    // Optional contact details. Sending the email is what tags the response to their record.
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("emailField").value.trim();
+    if (firstName) fields.push({ name: "firstname", value: firstName });
+    if (lastName) fields.push({ name: "lastname", value: lastName });
+    if (email) fields.push({ name: "email", value: email });
 
     const payload = {
       fields,
@@ -251,14 +277,22 @@
         "https://api.hsforms.com/submissions/v3/integration/submit/" + PORTAL_ID + "/" + FORM_GUID,
         { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }
       );
-      if (!res.ok) throw new Error("HubSpot returned " + res.status);
+      if (!res.ok) {
+        const bodyText = await res.text();
+        let detail = bodyText;
+        try {
+          const j = JSON.parse(bodyText);
+          detail = j.message || (j.errors ? j.errors.map(e => e.message).join(" | ") : bodyText);
+        } catch (_) {}
+        throw new Error(detail);
+      }
       document.getElementById("formState").style.display = "none";
       document.getElementById("doneState").classList.add("show");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       submitBtn.disabled = false;
       submitBtn.textContent = "Send my answers";
-      statusEl.textContent = "Something went wrong sending that. Please try again in a moment.";
+      statusEl.textContent = err.message || "Something went wrong sending that. Please try again in a moment.";
       console.error(err);
     }
   });
